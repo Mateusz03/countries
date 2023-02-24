@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { GlobalContext } from "../App";

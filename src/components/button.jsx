@@ -28,6 +28,7 @@ const Button = (props) => {
           body: { price: selectedRates.currency[1].price, inputs: inputValue },
         },
       );
+
       setInputValue(res.data.inputs);
     })();
   };

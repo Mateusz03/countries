@@ -78,7 +78,7 @@ function App() {
       const curr2 = res.data.filter((currency) => currency.code === "GBP");
 
       curr1[0].price = 1;
-      curr2[0].price = (curr1[0].price / curr2[0].price).toFixed(2);
+      curr2[0].price = curr1[0].price / curr2[0].price;
       setRates({ currency: [...curr1, ...curr2] });
     })();
   }, []);
@@ -104,11 +104,11 @@ function App() {
           <Input type="text" placeholder="-" title="They recive" />
           <Display>
             {typeof selectedRates !== "undefined"
-              ? `${
-                  selectedRates.currency[0].code
-                } ${selectedRates.currency[0].price.toFixed(2)} - ${
-                  selectedRates.currency[1].code
-                } ${selectedRates.currency[1].price}`
+              ? `${selectedRates.currency[0].code} ${parseFloat(
+                  selectedRates.currency[0].price,
+                ).toFixed(4)} - ${selectedRates.currency[1].code} ${parseFloat(
+                  selectedRates.currency[1].price,
+                ).toFixed(4)}`
               : ""}
           </Display>
           <Button value="Continue" />

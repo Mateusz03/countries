@@ -95,7 +95,7 @@ const Input = (props) => {
         setClick(0);
       }
     };
-  }, []);
+  }, [setClick]);
 
   return (
     <Container>
