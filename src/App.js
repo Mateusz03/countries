@@ -67,7 +67,11 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const res = await axios.post(process.env.REACT_APP_TABLEURL);
+      const res = await axios.post(
+        process.env.REACT_APP_LOCAL === true
+          ? process.env.REACT_APP_TABLEURL
+          : process.env.REACT_APP_TABLEURL_SERVER,
+      );
       setTable(res.data);
 
       const curr1 = res.data.filter((currency) => currency.code === "PLN");

@@ -20,9 +20,14 @@ const Button = (props) => {
 
   const onClick = () => {
     (async () => {
-      const res = await axios.post(process.env.REACT_APP_CALCULATION, {
-        body: { price: selectedRates.currency[1].price, inputs: inputValue },
-      });
+      const res = await axios.post(
+        process.env.REACT_APP_LOCAL === true
+          ? process.env.REACT_APP_CALCULATION
+          : process.env.REACT_APP_CALCULATION_SERVER,
+        {
+          body: { price: selectedRates.currency[1].price, inputs: inputValue },
+        },
+      );
       setInputValue(res.data.inputs);
     })();
   };

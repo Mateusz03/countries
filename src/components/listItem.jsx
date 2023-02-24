@@ -60,12 +60,17 @@ const ListItem = (props) => {
     }
     if (typeof selectedRates !== "undefined") {
       (async () => {
-        const res = await axios.post(process.env.REACT_APP_CONVERSION, {
-          body: [
-            { curr: localRates.currency[0].code },
-            { curr: localRates.currency[1].code },
-          ],
-        });
+        const res = await axios.post(
+          process.env.REACT_APP_LOCAL === true
+            ? process.env.REACT_APP_CONVERSION
+            : process.env.REACT_APP_CONVERSION_SERVER,
+          {
+            body: [
+              { curr: localRates.currency[0].code },
+              { curr: localRates.currency[1].code },
+            ],
+          },
+        );
         setRates(res.data);
       })();
     }
