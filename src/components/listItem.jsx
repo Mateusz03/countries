@@ -70,17 +70,16 @@ const ListItem = (props) => {
     }
     if (typeof selectedRates !== "undefined") {
       (async () => {
-        const res = await axios.post(
-          process.env.REACT_APP_LOCAL === true
-            ? process.env.REACT_APP_CONVERSION
-            : process.env.REACT_APP_CONVERSION_SERVER,
-          {
-            body: [
-              { curr: localRates.currency[0].code },
-              { curr: localRates.currency[1].code },
-            ],
-          },
-        );
+        const local = process.env.REACT_APP_LOCAL;
+        const url = process.env.REACT_APP_CONVERSION;
+        const url_server = process.env.REACT_APP_CONVERSION_SERVER;
+
+        const res = await axios.post(local ? url : url_server, {
+          body: [
+            { curr: localRates.currency[0].code },
+            { curr: localRates.currency[1].code },
+          ],
+        });
         setRates(res.data);
       })();
     }

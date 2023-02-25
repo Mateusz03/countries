@@ -24,14 +24,12 @@ const Button = (props) => {
 
   const onClick = () => {
     (async () => {
-      const res = await axios.post(
-        process.env.REACT_APP_LOCAL === true
-          ? process.env.REACT_APP_CALCULATION
-          : process.env.REACT_APP_CALCULATION_SERVER,
-        {
-          body: { price: selectedRates.currency[1].price, inputs: inputValue },
-        },
-      );
+      const local = process.env.REACT_APP_LOCAL;
+      const url = process.env.REACT_APP_CALCULATION;
+      const url_server = process.env.REACT_APP_CALCULATION_SERVER;
+      const res = await axios.post(local ? url : url_server, {
+        body: { price: selectedRates.currency[1].price, inputs: inputValue },
+      });
       setInputLoader(0);
       setInputValue(res.data.inputs);
     })();
