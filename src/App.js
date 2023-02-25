@@ -3,6 +3,7 @@ import styled, { createGlobalStyle } from "styled-components";
 import Input from "./components/input";
 import Button from "./components/button";
 import axios from "axios";
+import AppLoader from "./components/appLoader";
 
 export const GlobalContext = createContext();
 
@@ -54,6 +55,8 @@ const Title = styled.div`
 
 const Display = styled.div`
   height: 2rem;
+  font-weight: 700;
+  font-family: poppins;
 `;
 
 function App() {
@@ -64,6 +67,7 @@ function App() {
     { message: "" },
     { message: "" },
   ]);
+  const [inputLoader, setInputLoader] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -85,35 +89,41 @@ function App() {
 
   return (
     <Container>
-      <GlobalContext.Provider
-        value={{
-          selectedRates,
-          setRates,
-          table,
-          setTable,
-          click,
-          setClick,
-          inputValue,
-          setInputValue,
-        }}
-      >
-        <GlobalStyle />
-        <Main>
-          <Title>Exchange Rate</Title>
-          <Input type="text" placeholder="-" title="You send" />
-          <Input type="text" placeholder="-" title="They recive" />
-          <Display>
-            {typeof selectedRates !== "undefined"
-              ? `${selectedRates.currency[0].code} ${parseFloat(
-                  selectedRates.currency[0].price,
-                ).toFixed(4)} - ${selectedRates.currency[1].code} ${parseFloat(
-                  selectedRates.currency[1].price,
-                ).toFixed(4)}`
-              : ""}
-          </Display>
-          <Button value="Continue" />
-        </Main>
-      </GlobalContext.Provider>
+      <GlobalStyle />
+      {typeof table === "undefined" ? (
+        <AppLoader />
+      ) : (
+        <GlobalContext.Provider
+          value={{
+            selectedRates,
+            setRates,
+            table,
+            setTable,
+            click,
+            setClick,
+            inputValue,
+            setInputValue,
+            inputLoader,
+            setInputLoader,
+          }}
+        >
+          <Main>
+            <Title>Exchange Rate</Title>
+            <Input type="text" placeholder={"-"} title="You send" />
+            <Input type="text" placeholder={"-"} title="They recive" />
+            <Display>
+              {typeof selectedRates !== "undefined"
+                ? `${selectedRates.currency[0].code} ${parseFloat(
+                    selectedRates.currency[0].price,
+                  ).toPrecision(3)} - ${
+                    selectedRates.currency[1].code
+                  } ${parseFloat(selectedRates.currency[1].price).toFixed(3)}`
+                : ""}
+            </Display>
+            {inputLoader === 0 ? <Button value="Continue" /> : <AppLoader />}
+          </Main>
+        </GlobalContext.Provider>
+      )}
     </Container>
   );
 }

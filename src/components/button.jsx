@@ -12,10 +12,14 @@ const Butt = styled.div`
   box-shadow: 0px 4px 8px 1px #181823;
   border-radius: 5px;
   cursor: pointer;
+  transition: 60ms;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 const Button = (props) => {
-  const { selectedRates, inputValue, setInputValue } =
+  const { selectedRates, inputValue, setInputValue, setInputLoader } =
     useContext(GlobalContext);
 
   const onClick = () => {
@@ -28,7 +32,7 @@ const Button = (props) => {
           body: { price: selectedRates.currency[1].price, inputs: inputValue },
         },
       );
-
+      setInputLoader(0);
       setInputValue(res.data.inputs);
     })();
   };
@@ -36,7 +40,10 @@ const Button = (props) => {
   return (
     <Butt
       onClick={() => {
-        onClick();
+        if (inputValue[0].message !== "" || inputValue[1].message !== "") {
+          onClick();
+          setInputLoader(1);
+        }
       }}
     >
       {props.value}

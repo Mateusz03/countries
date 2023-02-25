@@ -32,22 +32,23 @@ const Input = styled.input`
   padding: 0;
   font-size: 1rem;
   width: 80%;
-  height: 30px;
+  height: 48px;
   padding: 0px 16px 0px 16px;
   outline: none;
   border: none;
   box-sizing: border-box;
+  font-family: poppins;
   border-radius: 0px 5px 0px 0px;
+  font-weight: 700;
 `;
 
 const ItemsContainer = styled.div`
   margin-top: 10px;
   position: relative;
-  height: calc(100% - 50px);
+  height: calc(100% - 68px);
   display: flex;
   flex-direction: column;
   gap: 8px;
-
   overflow-y: scroll;
 `;
 
@@ -64,11 +65,19 @@ const List = () => {
 
     if (name !== "") {
       const res = table.filter((item) => {
-        if (item.currency.toLocaleLowerCase().startsWith(name)) {
-          return item.currency.toLocaleLowerCase().startsWith(name);
+        if (
+          item.currency.toLocaleLowerCase().startsWith(name.toLocaleLowerCase())
+        ) {
+          return item.currency
+            .toLocaleLowerCase()
+            .startsWith(name.toLocaleLowerCase());
         }
-        if (item.code.toLocaleLowerCase().startsWith(name)) {
-          return item.code.toLocaleLowerCase().startsWith(name);
+        if (
+          item.code.toLocaleLowerCase().startsWith(name.toLocaleLowerCase())
+        ) {
+          return item.code
+            .toLocaleLowerCase()
+            .startsWith(name.toLocaleLowerCase());
         }
       });
       setFiltered(res);

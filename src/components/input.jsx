@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ReactComponent as Arrow } from "../svg/inputArrow.svg";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { GlobalContext } from "../App";
 
 import List from "./list";
@@ -21,6 +21,7 @@ const Flag = styled.img`
   margin-left: 32px;
   border: 1px solid #181823;
   border-radius: 5px;
+  visibility: ${(props) => props.visibility};
 `;
 const Inp = styled.input`
   width: 10rem;
@@ -65,6 +66,7 @@ const Display = styled.div`
 const Input = (props) => {
   const { selectedRates, click, setClick, inputValue, setInputValue } =
     useContext(GlobalContext);
+  const [visibility, setVisibility] = useState("block");
   const boxRef = useRef();
 
   const handleChange = (event) => {
@@ -108,10 +110,16 @@ const Input = (props) => {
       </Title>
       <Display>
         <Flag
+          visibility={visibility}
           onClick={() => {
             setClick(0);
           }}
           crossOrigin={"anonymous"}
+          onError={({ currentTarget }) => {
+            if (currentTarget.onerror === null) {
+              setVisibility("hidden");
+            }
+          }}
           src={
             typeof selectedRates !== "undefined"
               ? props.title === "You send"
