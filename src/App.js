@@ -117,7 +117,9 @@ function App() {
                     selectedRates.currency[0].price,
                   ).toPrecision(3)} - ${
                     selectedRates.currency[1].code
-                  } ${parseFloat(selectedRates.currency[1].price).toFixed(3)}`
+                  } ${parseFloat(selectedRates.currency[1].price).toPrecision(
+                    3,
+                  )}`
                 : ""}
             </Display>
             {inputLoader === 0 ? <Button value="Continue" /> : <AppLoader />}

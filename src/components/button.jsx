@@ -31,7 +31,11 @@ const Button = (props) => {
         body: { price: selectedRates.currency[1].price, inputs: inputValue },
       });
       setInputLoader(0);
-      setInputValue(res.data.inputs);
+
+      setInputValue([
+        { message: parseFloat(res.data.inputs[0].message) },
+        { message: parseFloat(res.data.inputs[1].message) },
+      ]);
     })();
   };
 
