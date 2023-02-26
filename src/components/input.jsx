@@ -110,6 +110,9 @@ const Input = (props) => {
       </Title>
       <Display>
         <Flag
+          onLoad={() => {
+            setVisibility("block");
+          }}
           visibility={visibility}
           onClick={() => {
             setClick(0);
