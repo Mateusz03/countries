@@ -32,7 +32,8 @@ const Code = styled.div`
 `;
 
 const ListItem = (props) => {
-  const { selectedRates, setRates, click } = useContext(GlobalContext);
+  const { selectedRates, setRates, click, setClick } =
+    useContext(GlobalContext);
   const [bg, setBg] = useState("#FFFFFF");
   const [visibility, setVisibility] = useState("block");
 
@@ -88,6 +89,7 @@ const ListItem = (props) => {
     <Container
       onClick={() => {
         selectItem(click);
+        setClick(0);
       }}
     >
       <Flag
